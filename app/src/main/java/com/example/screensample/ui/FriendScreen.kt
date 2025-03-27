@@ -1,3 +1,9 @@
+/*
+    This version of the Screen only lists one friend. It omits the advanced topics listed in the
+    README.md, which explain how to create a separate function for each friend, how to make a data
+    class, and load the data from a list using LazyColumn.
+ */
+
 package com.example.screensample.ui
 
 import androidx.compose.foundation.Image
@@ -5,15 +11,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -34,29 +37,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.screensample.R
-import com.example.screensample.ui.theme.ScreenSampleTheme
-
-data class Friend(
-    val name: String,
-    val picture: Int
-)
 
 @Composable
-fun ProfileScreen() {
-
-    // The list of friends to be added to the profile screen
-    val friends = listOf(
-        Friend("Jim", R.drawable.jim),
-        Friend("Oliver", R.drawable.oliver),
-        Friend("Carla", R.drawable.carla),
-    )
-
-    // Outer column that contains the entire screen
+fun FriendScreen() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        // First column, consists of the user profile information
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -66,15 +53,14 @@ fun ProfileScreen() {
             Spacer(modifier = Modifier.height(30.dp))
 
             Text(
-                "My Profile",
+                "My profile",
                 fontSize = 30.sp,
                 modifier = Modifier.padding(vertical = 20.dp)
             )
 
-            // User profile picture
             Image(
                 painter = painterResource(id = R.drawable.sarah_crop),
-                "Profile Picture",
+                contentDescription = "Sarah",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .padding(vertical = 20.dp)
@@ -82,7 +68,6 @@ fun ProfileScreen() {
                     .clip(CircleShape)
             )
 
-            // User full name
             Text(
                 "Sarah Martel",
                 fontSize = 40.sp
@@ -90,14 +75,12 @@ fun ProfileScreen() {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // User inspirational quote
             Text(
                 "\"Try it and see what happens.\"",
                 fontStyle = FontStyle.Italic,
                 fontSize = 20.sp
             )
 
-            // User email
             Text(
                 "sarahmmartel@gmail.com",
                 color = Color.Blue,
@@ -121,70 +104,53 @@ fun ProfileScreen() {
             HorizontalDivider(thickness = 2.dp)
         }
 
-        // Column to hold the list of Friends
+        // Start of the column which holds rows of Friends
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            // LazyColumn uses a lambda function, similar to a for-each loop in C++ or Java
-            LazyColumn(modifier = Modifier.fillMaxHeight()) {
-                items(friends) { friend ->
-                    FriendEntry(friend)
-                    HorizontalDivider(thickness = 2.dp)
-                }
+            // Row for Jim
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 15.dp)
+            ) {
+                Spacer(modifier = Modifier.width(20.dp))
+
+                Image(
+                    painterResource(id = R.drawable.jim),
+                    contentDescription = "Jim",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(80.dp)
+                        .clip(CircleShape)
+                )
+
+                Spacer(modifier = Modifier.width(20.dp))
+
+                Text(
+                    "Jim",
+                    fontSize = 20.sp,
+                    modifier = Modifier.weight(2f)
+                )
+
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .weight(1f)
+                )
             }
         }
     }
 }
 
-@Composable
-fun FriendEntry(friend: Friend) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 15.dp)
-        ) {
-        Spacer(modifier = Modifier.width(20.dp))
-        Image(
-            painter = painterResource(id = friend.picture),
-            "Profile Picture",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(80.dp)
-                .clip(CircleShape)
-        )
-        Spacer(modifier = Modifier.width(20.dp))
-        Text(
-            friend.name,
-            fontSize = 20.sp,
-            modifier = Modifier.weight(2f)
-        )
-        Icon(
-            imageVector = Icons.Filled.MoreVert,
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
-                .weight(1f)
-            )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
-fun ProfilePreview() {
-    ScreenSampleTheme {
-        ProfileScreen()
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FriendPreview() {
-    ScreenSampleTheme {
-        val sampleFriend = Friend("Jim", R.drawable.jim)
-        FriendEntry(sampleFriend)
-    }
+fun FriendScreenPreview() {
+    FriendScreen()
 }

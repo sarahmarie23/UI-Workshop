@@ -58,3 +58,5 @@ painter = painterResource(R.drawable.name_of_photo), "Content Description"
 * [Making a `List` in Compose](https://developer.android.com/develop/ui/compose/lists)
 
 * [Data Classes in Kotlin](https://www.baeldung.com/kotlin/data-classes)
+
+* [Modifiers](https://developer.android.com/develop/ui/compose/modifiers)
